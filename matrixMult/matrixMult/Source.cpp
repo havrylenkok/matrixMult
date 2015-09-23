@@ -2,6 +2,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <iomanip>
+#include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -10,6 +12,7 @@ int main() {
 	int N;
 	int **a, **b, **c;
 	int sum = 0;
+	string answer = "";
 
 	cout << "Input N (max 13000)\nN = ";
 	cin >> N;
@@ -73,14 +76,21 @@ int main() {
 	cout << "Execution time : " << setprecision(30) << double((clock() - t)) / CLOCKS_PER_SEC
 		<< endl;
 
-	cout << "Product of entered matrices:-\n";
+	cout << "Do you wan't to save results of multiplcation in file? Y/N: ";
+	cin >> answer;
+	if (answer[0] == 'Y' || answer[0] == 'y') {
 
-	/*for (int i = 0; i < N; c++) {
-		for (int d = 0; d < N; d++)
-			cout << c[i][d] << "\t";
+		ofstream fout;
+		fout.open("results.txt");
 
-		cout << endl;
-	}*/
+		fout << "Results:\n";
+
+		for (int i = 0; i < N; i++) {
+			for (int d = 0; d < N; d++)
+				fout << c[i][d] << "\t";
+			fout << endl;
+		}
+	}
 
 	srand(time(NULL));
 	t = clock();
