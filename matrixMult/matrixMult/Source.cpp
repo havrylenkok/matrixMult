@@ -1,52 +1,75 @@
-#include <stdio.h>
+#include <iostream>
 #include <cstdlib>
+#include <ctime>
+#include <iomanip>
 
-int main()
-{
-	int m, n, p, q, c, d, k, sum = 0;
-	int first[10][10], second[10][10], multiply[10][10];
+using namespace std;
 
-	printf("Enter the number of rows and columns of first matrix\n");
-	scanf_s("%d%d", &m, &n);
-	printf("Enter the elements of first matrix\n");
+int main() {
 
-	for (c = 0; c < m; c++)
-		for (d = 0; d < n; d++)
-			scanf_s("%d", &first[c][d]);
+	int N;
+	int **a, **b, **c;
 
-	printf("Enter the number of rows and columns of second matrix\n");
-	scanf_s("%d%d", &p, &q);
+	cout << "Input N (max 13000)\nN = ";
+	cin >> N;
 
-	if (n != p)
-		printf("Matrices with entered orders can't be multiplied with each other.\n");
-	else
-	{
-		printf("Enter the elements of second matrix\n");
+	clock_t t;
+	t = clock();
 
-		for (c = 0; c < p; c++)
-			for (d = 0; d < q; d++)
-				scanf_s("%d", &second[c][d]);
+	try {
 
-		for (c = 0; c < m; c++) {
-			for (d = 0; d < q; d++) {
-				for (k = 0; k < p; k++) {
-					sum = sum + first[c][k] * second[k][d];
-				}
+		a = new int*[N];
+		b = new int*[N];
+		c = new int*[N];
 
-				multiply[c][d] = sum;
-				sum = 0;
-			}
-		}
+		for (int i = 0; i < N; i++) {
 
-		printf("Product of entered matrices:-\n");
-
-		for (c = 0; c < m; c++) {
-			for (d = 0; d < q; d++)
-				printf("%d\t", multiply[c][d]);
-
-			printf("\n");
+			a[i] = new int[N];
+			b[i] = new int[N];
+			c[i] = new int[N];
 		}
 	}
-	system("pause");
+	catch (bad_alloc) {
+
+		cout << "Bad alloc\n";
+		cin.get();
+		return 1;
+
+	}
+
+	cout << "Allocation time : " << setprecision(30) << double((clock() - t)) / CLOCKS_PER_SEC
+		<< endl;
+
+	srand(time(NULL));
+	t = clock();
+
+	for (int i = 0; i < N; i++)
+		for (int j = 0; j < N; j++) {
+
+			a[i][j] = rand() % 200 - 100;
+			b[i][j] = rand() % 200 - 100;
+			c[i][j] = rand() % 200 - 100;
+		}
+
+	cout << "Filling time : " << setprecision(30) << double((clock() - t)) / CLOCKS_PER_SEC
+		<< endl;
+
+	cout << "Press <Enter> to clean memory\n";
+	cin.get(); cin.get();
+
+	for (int i = 0; i<N; i++) {
+
+		delete[] a[i];
+		delete[] b[i];
+		delete[] c[i];
+	}
+
+	delete[] a;
+	delete[] b;
+	delete[] c;
+
+	cout << "Memory is cleaned.\nBye!\n";
+	cin.get();
+
 	return 0;
 }
