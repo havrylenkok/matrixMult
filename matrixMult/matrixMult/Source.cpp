@@ -9,6 +9,7 @@ int main() {
 
 	int N;
 	int **a, **b, **c;
+	int sum = 0;
 
 	cout << "Input N (max 13000)\nN = ";
 	cin >> N;
@@ -43,6 +44,7 @@ int main() {
 	srand(time(NULL));
 	t = clock();
 
+
 	for (int i = 0; i < N; i++)
 		for (int j = 0; j < N; j++) {
 
@@ -53,6 +55,35 @@ int main() {
 
 	cout << "Filling time : " << setprecision(30) << double((clock() - t)) / CLOCKS_PER_SEC
 		<< endl;
+
+	srand(time(NULL));
+	t = clock();
+
+	for (int i = 0; i < N; i++) {
+		for (int d = 0; d < N; d++) {
+			for (int k = 0; k < N; k++) {
+				sum = sum + a[i][k] * b[k][d];
+			}
+
+			c[i][d] = sum;
+			sum = 0;
+		}
+	}
+
+	cout << "Execution time : " << setprecision(30) << double((clock() - t)) / CLOCKS_PER_SEC
+		<< endl;
+
+	cout << "Product of entered matrices:-\n";
+
+	/*for (int i = 0; i < N; c++) {
+		for (int d = 0; d < N; d++)
+			cout << c[i][d] << "\t";
+
+		cout << endl;
+	}*/
+
+	srand(time(NULL));
+	t = clock();
 
 	cout << "Press <Enter> to clean memory\n";
 	cin.get(); cin.get();
