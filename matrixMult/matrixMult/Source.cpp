@@ -68,7 +68,7 @@ int main() {
 	delete[] b;
 	delete[] c;
 
-	cout << "Cleaning memory done!\nGood bye =)\n";
+	cout << "Memory is cleaned.\nBye!\n";
 	cin.get();
 
 	return 0;
