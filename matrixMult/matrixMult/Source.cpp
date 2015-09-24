@@ -114,7 +114,7 @@ int main() {
 		fout << "Results:\n";
 
 		for (int i = 0; i < aRows; i++) {
-			for (int j = 0; j < bColumns; d++)
+			for (int j = 0; j < bColumns; j++)
 				fout << c[i][j] << "\t";
 			fout << endl;
 		}
@@ -122,9 +122,6 @@ int main() {
 
 	srand(time(NULL));
 	t = clock();
-
-	cout << "Press <Enter> to clean memory\n";
-	cin.get(); cin.get();
 
 	for (int i = 0; i<maxRowCount; i++) {
 
@@ -137,7 +134,6 @@ int main() {
 	delete[] b;
 	delete[] c;
 
-	cout << "Memory is cleaned.\nBye!\n";
 	cin.get(); 
 
 	return 0;
