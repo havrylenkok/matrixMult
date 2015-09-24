@@ -53,11 +53,12 @@ int main() {
 
 			a[i][j] = rand() % 200 - 100;
 			b[i][j] = rand() % 200 - 100;
-			c[i][j] = rand() % 200 - 100;
 		}
 
 	cout << "Filling time : " << setprecision(30) << double((clock() - t)) / CLOCKS_PER_SEC
 		<< endl;
+
+	cout << "Work in progress...\n";
 
 	srand(time(NULL));
 	t = clock();
