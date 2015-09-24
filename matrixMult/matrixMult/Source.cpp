@@ -30,7 +30,7 @@ int main() {
 		c = new int*[N];
 
 		
-#pragma parallel omp for
+#pragma omp parallel for
 		for (int i = 0; i < N; i++) {
 
 			a[i] = new int[N];
@@ -53,7 +53,7 @@ int main() {
 
 	srand(time(NULL));
 	t = clock();
-#pragma parallel omp for
+#pragma omp parallel for collapse(2)
 	for (int i = 0; i < N; i++) {
 		for (int j = 0; j < N; j++) {
 
@@ -72,9 +72,10 @@ int main() {
 	srand(time(NULL));
 	t = clock();
 
-#pragma parallel omp for
+
 	for (int i = 0; i < N; i++) {
 		for (int d = 0; d < N; d++) {
+#pragma omp parallel for
 			for (int k = 0; k < N; k++) {
 				sum = sum + a[i][k] * b[k][d];
 			}
@@ -102,7 +103,7 @@ int main() {
 		fout << "Results:\n";
 
 		
-#pragma parallel omp for
+#pragma omp parallel for collapse(2)
 		for (int i = 0; i < N; i++) {
 			for (int d = 0; d < N; d++)
 				fout << c[i][d] << "\t";
@@ -116,6 +117,7 @@ int main() {
 	cout << "Press <Enter> to clean memory\n";
 	cin.get(); cin.get();
 
+#pragma omp parallel for
 	for (int i = 0; i<N; i++) {
 
 		delete[] a[i];
