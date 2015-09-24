@@ -46,7 +46,9 @@ int main() {
 
 	}
 
-	cout << "Allocation time : " << setprecision(30) << double((clock() - t)) / CLOCKS_PER_SEC
+	auto allocation = double((clock() - t)) / CLOCKS_PER_SEC;
+
+	cout << "Allocation time : " << setprecision(30) << allocation
 		<< endl;
 
 	srand(time(NULL));
@@ -57,12 +59,15 @@ int main() {
 
 			a[i][j] = rand() % 200 - 100;
 			b[i][j] = rand() % 200 - 100;
-			c[i][j] = rand() % 200 - 100;
 		}
 	}
 
-	cout << "Filling time : " << setprecision(30) << double((clock() - t)) / CLOCKS_PER_SEC
+	auto filling = double((clock() - t)) / CLOCKS_PER_SEC;
+
+	cout << "Filling time : " << setprecision(30) << filling
 		<< endl;
+
+	cout << "Work in progress...\n";
 
 	srand(time(NULL));
 	t = clock();
@@ -79,7 +84,9 @@ int main() {
 		}
 	}
 
-	cout << "Execution time : " << setprecision(30) << double((clock() - t)) / CLOCKS_PER_SEC
+	auto execution = double((clock() - t)) / CLOCKS_PER_SEC;
+
+	cout << "Execution time : " << setprecision(30) << execution
 		<< endl;
 
 	cout << "Do you wan't to save results of multiplcation in file? Y/N: ";
@@ -89,6 +96,9 @@ int main() {
 		ofstream fout;
 		fout.open("results.txt");
 
+		fout << "Allocation time: " << setprecision(30) << allocation << endl
+			<< "Filling time:\t " << filling << endl
+			<< "Execution time:\t " << execution << endl;
 		fout << "Results:\n";
 
 		
