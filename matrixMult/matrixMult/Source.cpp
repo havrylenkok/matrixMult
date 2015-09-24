@@ -119,7 +119,7 @@ int main() {
 
 #pragma omp parallel for
 	for (int i = 0; i<N; i++) {
-
+		 
 		delete[] a[i];
 		delete[] b[i];
 		delete[] c[i];
