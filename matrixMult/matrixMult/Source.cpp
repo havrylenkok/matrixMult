@@ -128,7 +128,7 @@ int main() {
 	delete[] c;
 
 	cout << "Memory is cleaned.\nBye!\n";
-	cin.get();
+	cin.get(); 
 
 	return 0;
 }
