@@ -100,7 +100,7 @@ int main() {
 		fout << "Allocation time: " << setprecision(30) << allocation << endl
 			<< "Filling time:\t " << filling << endl
 			<< "Execution time:\t " << execution << endl;
-		fout << "Results:\n";
+		fout << "Results:\n"; 
 
 		
 #pragma omp parallel for collapse(2)
