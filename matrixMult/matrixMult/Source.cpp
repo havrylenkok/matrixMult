@@ -47,7 +47,7 @@ int main() {
 	}
 	catch (bad_alloc) {
 
-		cout << "Bad alloc\n";
+		cout << "Bad alloc (check your input!)\n";
 		cin.get(); cin.get();
 		return 2;
 
@@ -101,17 +101,17 @@ int main() {
 
 	cout << "Execution time : " << setprecision(30) << execution << endl;
 
+	ofstream fout;
+	fout.open("results.txt");
+
+	fout << "Allocation time: " << setprecision(30) << allocation << endl
+		<< "Filling time:\t " << filling << endl
+		<< "Execution time:\t " << execution << endl;
+	fout << "Results:\n";
+
 	cout << "Do you wan't to save results of multiplcation in file? Y/N: ";
 	cin >> answer;
 	if (answer[0] == 'Y' || answer[0] == 'y') {
-
-		ofstream fout;
-		fout.open("results.txt");
-
-		fout << "Allocation time: "  << setprecision(30) << allocation << endl
-			 << "Filling time:\t "   << filling   << endl
-			 << "Execution time:\t " << execution << endl;
-		fout << "Results:\n";
 
 		for (int i = 0; i < aRows; i++) {
 			for (int j = 0; j < bColumns; j++)
@@ -135,6 +135,7 @@ int main() {
 	delete[] c;
 
 	cin.get(); 
+	fout.close();
 
 	return 0;
 }
