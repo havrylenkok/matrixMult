@@ -107,11 +107,12 @@ int main() {
 	fout << "Allocation time: " << setprecision(30) << allocation << endl
 		<< "Filling time:\t " << filling << endl
 		<< "Execution time:\t " << execution << endl;
-	fout << "Results:\n";
 
 	cout << "Do you wan't to save results of multiplcation in file? Y/N: ";
 	cin >> answer;
 	if (answer[0] == 'Y' || answer[0] == 'y') {
+
+		fout << "\nResults:\n";
 
 		for (int i = 0; i < aRows; i++) {
 			for (int j = 0; j < bColumns; j++)
