@@ -97,7 +97,6 @@ int main() {
 	
 	int i, j, k;
 
-	double x[4];
 #pragma omp parallel num_threads(4) private(j,k)
 {	
 
