@@ -64,20 +64,23 @@ int main() {
 	int maxRowCount = (aRows > bRows) ? aRows : bRows;
 	int maxColumnCount = (aColumns > bColumns) ? aColumns : bColumns;
 
+#pragma omp parallel
+{
 	for (int i = 0; i < maxRowCount; i++) {
 
+		#pragma omp for
 		for (int j = 0; j < maxColumnCount; j++) {
 
 			if (i < aRows && j < aColumns) a[i][j] = rand() % 200 - 100;
 			if (i < bRows && j < bColumns)  b[i][j] = rand() % 200 - 100;
 		}
 	}
-
+}
 	auto filling = double((clock() - t)) / CLOCKS_PER_SEC;
 
 	cout << "Filling time : " << setprecision(30) << filling
 		 << endl;
-
+	/*
 	cout << "Work in progress...\n";
 
 	srand(time(NULL));
@@ -123,6 +126,7 @@ int main() {
 
 	srand(time(NULL));
 	t = clock();
+	*/
 
 	for (int i = 0; i<maxRowCount; i++) {
 
@@ -136,7 +140,7 @@ int main() {
 	delete[] c;
 
 	cin.get(); 
-	fout.close();
+	//fout.close();
 
 	return 0;
 }
