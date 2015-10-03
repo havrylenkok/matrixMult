@@ -4,8 +4,10 @@
 #include <iomanip>
 #include <string>
 #include <fstream>
+#include <omp.h>
 
 using namespace std;
+
 
 int main() {
 
@@ -38,12 +40,16 @@ int main() {
 
 		int maxRowCount = (aRows > bRows) ? aRows : bRows;
 
+#pragma omp parallel num_threads(4)
+{		
+		#pragma omp for
 		for (int i = 0; i < maxRowCount; i++) {
 
-			if(i < aRows) a[i] = new int[aColumns];
-			if(i < bRows) b[i] = new int[bColumns];
-			if(i < aRows) c[i] = new int[bColumns];
+			if (i < aRows) a[i] = new int[aColumns];
+			if (i < bRows) b[i] = new int[bColumns];
+			if (i < aRows) c[i] = new int[bColumns];
 		}
+}
 	}
 	catch (bad_alloc) {
 
@@ -64,11 +70,12 @@ int main() {
 	int maxRowCount = (aRows > bRows) ? aRows : bRows;
 	int maxColumnCount = (aColumns > bColumns) ? aColumns : bColumns;
 
-#pragma omp parallel
-{
+#pragma omp parallel num_threads(4)
+{	
+	
 	for (int i = 0; i < maxRowCount; i++) {
 
-		#pragma omp for
+		#pragma omp for 
 		for (int j = 0; j < maxColumnCount; j++) {
 
 			if (i < aRows && j < aColumns) a[i][j] = rand() % 200 - 100;
@@ -76,36 +83,45 @@ int main() {
 		}
 	}
 }
+
+	
 	auto filling = double((clock() - t)) / CLOCKS_PER_SEC;
 
 	cout << "Filling time : " << setprecision(30) << filling
 		 << endl;
-	/*
+
 	cout << "Work in progress...\n";
 
 	srand(time(NULL));
 	t = clock();
+	
+	int i, j, k;
 
-	for (int i = 0; i < aRows; i++) {
+	double x[4];
+#pragma omp parallel num_threads(4) private(j,k)
+{	
 
-		for (int j = 0; j < bColumns; j++) {
+#pragma omp for
+	for (i = 0; i < aRows; i++) {
 
-			for (int k = 0; k < aColumns; k++) {
-
-				sum = sum + a[i][k] * b[k][j];
+			for (j = 0; j < bColumns; j++) {
+				
+				for (k = 0; k < aColumns; k++) {
+					
+					sum += a[i][k] * b[k][j];
+				}
+				
+				c[i][j] = sum;
+				sum = 0;
 			}
-
-			c[i][j] = sum;
-			sum = 0;
-		}
 	}
-
-	auto execution = double((clock() - t)) / CLOCKS_PER_SEC;
-
-	cout << "Execution time : " << setprecision(30) << execution << endl;
+}
+	auto execution = double((clock() - t)) / CLOCKS_PER_SEC;	
 
 	ofstream fout;
 	fout.open("results.txt");
+
+	cout << "Execution time : " << setprecision(30) << execution << endl;
 
 	fout << "Allocation time: " << setprecision(30) << allocation << endl
 		<< "Filling time:\t " << filling << endl
@@ -126,8 +142,7 @@ int main() {
 
 	srand(time(NULL));
 	t = clock();
-	*/
-
+	
 	for (int i = 0; i<maxRowCount; i++) {
 
 		if( i < aRows ) delete[] a[i];
@@ -139,8 +154,8 @@ int main() {
 	delete[] b;
 	delete[] c;
 
-	cin.get(); 
-	//fout.close();
+	cin.get(); cin.get();
+	fout.close();
 
 	return 0;
 }
